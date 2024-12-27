@@ -6,15 +6,6 @@ Welcome to the **Franka Installation Tutorial**! This guide walks you through se
 - **franka_ros** configured 
 - **Cartesian Impedance Control** enabled
 
-This repository, developed by **Alessio De Bona** and inspired by Venkatesh's original tutorial, ensures you’re ready to explore the capabilities of the Franka robot. Tested on:
-
-- 🌐 **Ubuntu 16.04** with ROS Kinetic
-- 🌐 **Ubuntu 20.04** with ROS Noetic
-
-> **Note:** A simple Python script is included to verify your setup. Let’s get started! 🏃‍♂️
-
----
-
 ## ✨ Libfranka Installation
 
 ### Steps
