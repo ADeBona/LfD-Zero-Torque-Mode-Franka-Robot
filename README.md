@@ -1,11 +1,19 @@
-# Franka Setup Guide 💻
+# Franka Setup Guide 💪💻
 
 Welcome to the **Franka Installation Tutorial**! This guide walks you through setting up the Franka Emika Panda robot for your Ubuntu system. By the end, you'll have:
 
-- **Libfranka** installed
-- **franka_ros** configured
+- **Libfranka** installed 
+- **franka_ros** configured 
 - **Cartesian Impedance Control** enabled
 
+This repository, developed by **Alessio De Bona** and inspired by Venkatesh's original tutorial, ensures you’re ready to explore the capabilities of the Franka robot. Tested on:
+
+- 🌐 **Ubuntu 16.04** with ROS Kinetic
+- 🌐 **Ubuntu 20.04** with ROS Noetic
+
+> **Note:** A simple Python script is included to verify your setup. Let’s get started! 🏃‍♂️
+
+---
 
 ## ✨ Libfranka Installation
 
@@ -131,6 +139,40 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 ### Notes
 - Press **`h`** to move the robot to its home position.
 - Press **`t`** to enable the zero torque Cartesian impedance controller for manual movement.
+
+---
+
+## 📊 Recording ROSBAG Data
+
+### Steps
+
+1. **Set Up for ROSBAG Recording:**
+   Identify the topics you want to record. Common topics for the Franka Emika Panda include:
+   - `/franka_state_controller/F_ext` (External forces)
+   - `/franka_state_controller/joint_states` (Joint positions, velocities, and efforts)
+   - `/cartesian_impedance_example_controller/ee_pose` (End-effector position and orientation)
+   - `/cartesian_impedance_example_controller/ee_twist` (End-effector velocity)
+
+2. **Start Recording Data:**
+   Use the following command to record the desired topics:
+   ```bash
+   rosbag record -o franka_data /franka_state_controller/F_ext /franka_state_controller/joint_states /cartesian_impedance_example_controller/ee_pose /cartesian_impedance_example_controller/ee_twist
+   ```
+
+   This will create a `.bag` file containing the recorded data.
+
+3. **Stop Recording:**
+   Press **`Ctrl+C`** in the terminal where the `rosbag` command is running to stop recording.
+
+4. **Verify the Data:**
+   Use the following command to inspect the contents of the recorded bag file:
+   ```bash
+   rosbag info franka_data.bag
+   ```
+
+### Notes
+- Ensure the robot is operational and publishing data on the desired topics before starting the recording.
+- ROSBAG files can be used for offline analysis or playback of recorded robot states.
 
 ---
 
