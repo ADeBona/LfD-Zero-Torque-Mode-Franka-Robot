@@ -6,6 +6,8 @@ Welcome to the **Franka Installation Tutorial**! This guide walks you through se
 - **franka_ros** configured 
 - **Cartesian Impedance Control** enabled
 
+---
+
 ## ✨ Libfranka Installation
 
 ### Steps
@@ -135,41 +137,36 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 
 ## 📊 Recording ROSBAG Data
 
-Steps
+### Steps
 
-Set Up for ROSBAG Recording:
-Identify the topics you want to record. Common topics for the Franka Emika Panda include:
+1. **Set Up for ROSBAG Recording:**
+   Identify the topics you want to record. Common topics for the Franka Emika Panda include:
+   - `/franka_state_controller/F_ext` (External forces)
+   - `/franka_state_controller/joint_states` (Joint positions, velocities, and efforts)
+   - `/cartesian_impedance_example_controller/ee_pose` (End-effector position and orientation)
+   - `/cartesian_impedance_example_controller/ee_twist` (End-effector velocity)
 
-/franka_state_controller/F_ext (External forces)
+2. **Start Recording Data:**
+   Use the following command to record the desired topics:
+   ```bash
+   rosbag record -o $(date +"franka_data_%Y-%m-%d_%H-%M-%S") /franka_state_controller/F_ext /franka_state_controller/joint_states /cartesian_impedance_example_controller/ee_pose /cartesian_impedance_example_controller/ee_twist
+   ```
 
-/franka_state_controller/joint_states (Joint positions, velocities, and efforts)
+   This will generate a `.bag` file with a timestamped name (e.g., `franka_data_2024-12-27_14-45-30.bag`) in the current directory where the command is executed. You can later analyze or replay it for debugging and visualization. 📈
 
-/cartesian_impedance_example_controller/ee_pose (End-effector position and orientation)
+3. **Stop Recording:**
+   Press **`Ctrl+C`** in the terminal where the `rosbag` command is running to stop recording.
 
-/cartesian_impedance_example_controller/ee_twist (End-effector velocity)
+4. **Verify the Data:**
+   Use the following command to inspect the contents of the recorded bag file:
+   ```bash
+   rosbag info franka_data_*.bag
+   ```
 
-Start Recording Data:
-Use the following command to record the desired topics:
-
-rosbag record -o $(date +"franka_data_%Y-%m-%d_%H-%M-%S") /franka_state_controller/F_ext /franka_state_controller/joint_states /cartesian_impedance_example_controller/ee_pose /cartesian_impedance_example_controller/ee_twist
-
-This will generate a .bag file with a timestamped name (e.g., franka_data_2024-12-27_14-45-30.bag) in the current directory where the command is executed. You can later analyze or replay it for debugging and visualization. 📈
-
-Stop Recording:
-Press Ctrl+C in the terminal where the rosbag command is running to stop recording.
-
-Verify the Data:
-Use the following command to inspect the contents of the recorded bag file:
-
-rosbag info franka_data_*.bag
-
-Notes
-
-Ensure the robot is operational and publishing data on the desired topics before starting the recording.
-
-The timestamp in the filename makes it easy to organize recordings by date and time.
-
-ROSBAG files can be used for offline analysis or playback of recorded robot states.
+### Notes
+- Ensure the robot is operational and publishing data on the desired topics before starting the recording.
+- The timestamp in the filename makes it easy to organize recordings by date and time.
+- ROSBAG files can be used for offline analysis or playback of recorded robot states.
 
 ---
 
