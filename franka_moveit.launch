@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="robot_ip" default="172.16.0.2"/>
+  <arg name="load_gripper" default="false" />
+  <arg name="load_camera" default="false" />
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find franka_description)/robots/panda_arm_hand.urdf.xacro'" if="$(arg load_gripper)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find franka_description)/robots/panda_arm.urdf.xacro'" unless="$(arg load_gripper)" />
+
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+	<args name="enable_pointcloud" value="true"/>
+  </include>
+
+  <include file="$(find franka_gripper)/launch/franka_gripper.launch" if="$(arg load_gripper)">
+    <arg name="robot_ip" value="$(arg robot_ip)" />
+  </include>
+
+  <node name="franka_control" pkg="franka_control" type="franka_control_node" output="screen" required="true">
+    <rosparam command="load" file="$(find franka_control)/config/franka_control_node.yaml" />
+    <param name="robot_ip" value="$(arg robot_ip)" />
+  </node>
+
+  <rosparam command="load" file="$(find franka_control)/config/default_controllers.yaml" />
+  <node name="state_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="franka_state_controller"/>
+  <node name="position_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="position_joint_trajectory_controller"/>
+
+  <rosparam command="load" file="$(find franka_example_controllers)/config/franka_example_controllers.yaml"/>
+  <node name="torque_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--stopped panda_leader_cartesian_impedance_controller"/>
+  <!-- <node name="torque_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="stopped cartesian_impedance_example_controller"/> -->
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+  <node name="joint_state_publisher" type="joint_state_publisher" pkg="joint_state_publisher" output="screen">
+    <rosparam if="$(arg load_gripper)" param="source_list">[franka_state_controller/joint_states, franka_gripper/joint_states] </rosparam>
+    <rosparam unless="$(arg load_gripper)" param="source_list">[franka_state_controller/joint_states] </rosparam>
+    <param name="rate" value="30"/>
+  </node>
+  <node name="joint_state_desired_publisher" type="joint_state_publisher" pkg="joint_state_publisher" output="screen">
+    <rosparam if="$(arg load_gripper)" param="source_list">[franka_state_controller/joint_states_desired, franka_gripper/joint_states] </rosparam>
+    <rosparam unless="$(arg load_gripper)" param="source_list">[franka_state_controller/joint_states_desired] </rosparam>
+    <param name="rate" value="30"/>
+    <remap from="/joint_states" to="/joint_states_desired" />
+  </node>
+
+  <include file="$(find panda_moveit_config)/launch/move_group.launch">
+    <arg name="fake_execution" value="false"/>
+  </include>
+
+  <!-- <include file="$(find panda_moveit_config)/launch/moveit_rviz.launch">
+  </include> -->
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="xela_sensor_link_tf" args="0.025 0.01 0.065 0 0 0 1 /panda_leftfinger /xela_sensor_frame 1000" /> -->
+
+
+  <group if="$(arg load_camera)" >
+    <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="serial_no"         value=""/>
+      <arg name="json_file_path"    value=""/>
+      <arg name="depth_width"       value="640"/>
+      <arg name="depth_height"      value="480"/>
+      <arg name="depth_fps"         value="30"/>
+      <arg name="color_width"       value="640"/>
+      <arg name="color_height"      value="480"/>
+      <arg name="color_fps"         value="30"/>
+      <arg name="enable_depth"      value="true"/>
+      <arg name="enable_color"      value="true"/>
+      <arg name="enable_infra1"     value="false"/>
+      <arg name="enable_infra2"     value="false"/>
+      <arg name="enable_fisheye"    value="false"/>
+      <arg name="enable_gyro"       value="false"/>
+      <arg name="enable_accel"      value="false"/>
+      <arg name="enable_pointcloud" value="true"/>
+      <arg name="enable_sync"       value="true"/>
+      <arg name="tf_prefix"         value="_camera"/>
+      <arg name="filters"         value="pointcloud"/>
+    </include>
+  </group>
+
+  <!-- <include file="$(find xela_server)/launch/service.launch">
+  </include> -->
+
+  <!-- <node name="rqt_controller_manager_franka" pkg="rqt_controller_manager" type="rqt_controller_manager" output="screen"/> -->
+
+</launch>

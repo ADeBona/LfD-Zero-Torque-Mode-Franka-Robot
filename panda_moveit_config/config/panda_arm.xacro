@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:macro name="panda_arm">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="panda_arm">
+      <link name="panda_link0" />
+      <link name="panda_link1" />
+      <link name="panda_link2" />
+      <link name="panda_link3" />
+      <link name="panda_link4" />
+      <link name="panda_link5" />
+      <link name="panda_link6" />
+      <link name="panda_link7" />
+      <link name="panda_link8" />
+      <joint name="panda_joint1" />
+      <joint name="panda_joint2" />
+      <joint name="panda_joint3" />
+      <joint name="panda_joint4" />
+      <joint name="panda_joint5" />
+      <joint name="panda_joint6" />
+      <joint name="panda_joint7" />
+      <joint name="panda_joint8" />
+      <chain base_link="panda_link0" tip_link="panda_link8" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="ready" group="panda_arm">
+      <joint name="panda_joint1" value="0" />
+      <joint name="panda_joint2" value="-0.785" />
+      <joint name="panda_joint3" value="0" />
+      <joint name="panda_joint4" value="-2.356" />
+      <joint name="panda_joint5" value="0" />
+      <joint name="panda_joint6" value="1.571" />
+      <joint name="panda_joint7" value="0.785" />
+    </group_state>
+    <!-- poses for point cloud -->
+    <group_state name="poseA" group="panda_arm">
+      <joint name="panda_joint1" value="0" />
+      <joint name="panda_joint2" value="-0.24278732" />
+      <joint name="panda_joint3" value="-0.01923691" />
+      <joint name="panda_joint4" value="-1.87651432" />
+      <joint name="panda_joint5" value="-0.00768018" />
+      <joint name="panda_joint6" value="1.574732" />
+      <joint name="panda_joint7" value="0.81318551" />
+    </group_state>
+<!--  [-0.054376723940555954, 0.47107193895250726, 0.17132412009700984, -2.033785129495577, -0.03783123728979414, 2.4433970299296908, 0.9516244647689571] -->
+    <group_state name="nippleA" group="panda_arm">
+      <joint name="panda_joint1" value="-0.054376723940555954" />
+      <joint name="panda_joint2" value="0.47107193895250726" />
+      <joint name="panda_joint3" value="0.17132412009700984" />
+      <joint name="panda_joint4" value="-2.033785129495577" />
+      <joint name="panda_joint5" value="-0.03783123728979414" />
+      <joint name="panda_joint6" value="2.4433970299296908" />
+      <joint name="panda_joint7" value="0.9516244647689571" />
+    </group_state>
+
+<!-- [-0.05075450558463732, 0.33619116882018396, 0.24056689982070653, -2.2673909218436794, -0.1499714077506209, 2.6326718765970223, 0.33089223800978584,  -->
+    <group_state name="nippleB" group="panda_arm">
+      <joint name="panda_joint1" value="-0.05075450558463732" />
+      <joint name="panda_joint2" value="0.33619116882018396" />
+      <joint name="panda_joint3" value="0.24056689982070653" />
+      <joint name="panda_joint4" value="-2.2673909218436794" />
+      <joint name="panda_joint5" value="-0.1499714077506209" />
+      <joint name="panda_joint6" value="2.6326718765970223" />
+      <joint name="panda_joint7" value="0.33089223800978584" />
+    </group_state>
+
+<!-- [-0.013777106709055475, 0.39804385980602447, 0.07457416601831604, -2.1136673020640075, -0.01011319098046733, 2.4297943443565524, 1.4367238919482461, -->
+    <group_state name="nippleC" group="panda_arm">
+      <joint name="panda_joint1" value="-0.013777106709055475" />
+      <joint name="panda_joint2" value="0.39804385980602447" />
+      <joint name="panda_joint3" value="0.07457416601831604" />
+      <joint name="panda_joint4" value="-2.1136673020640075" />
+      <joint name="panda_joint5" value="-0.01011319098046733" />
+      <joint name="panda_joint6" value="2.4297943443565524" />
+      <joint name="panda_joint7" value="1.4367238919482461" />
+    </group_state>
+
+<!-- [0.0033272228759615727, 0.17591706981655317, 0.0461060038543639, -2.480672533383676, -0.005410064732307921, 2.602337698035745, 0.852062157835232, -->
+    <group_state name="nippleD" group="panda_arm">
+      <joint name="panda_joint1" value="0.0033272228759615727" />
+      <joint name="panda_joint2" value="0.17591706981655317" />
+      <joint name="panda_joint3" value="0.0461060038543639" />
+      <joint name="panda_joint4" value="-2.480672533383676" />
+      <joint name="panda_joint5" value="-0.005410064732307921" />
+      <joint name="panda_joint6" value="2.602337698035745" />
+      <joint name="panda_joint7" value="0.852062157835232" />
+    </group_state>
+
+    <!-- <group_state name="poseA" group="panda_arm">
+      <joint name="panda_joint1" value="0" />
+      <joint name="panda_joint2" value="0.1270102160993837" />
+      <joint name="panda_joint3" value="0.0852566818852856" />
+      <joint name="panda_joint4" value="-1.5017109919598228" />
+      <joint name="panda_joint5" value="-0.009799372839026566" />
+      <joint name="panda_joint6" value="1.6255091629357006" />
+      <joint name="panda_joint7" value="0.8044844346793393" />
+    </group_state>
+
+    <group_state name="poseB" group="panda_arm">
+      <joint name="panda_joint1" value="0" />
+      <joint name="panda_joint2" value="0.4742318469808812" />
+      <joint name="panda_joint3" value="0.14770932456315608" />
+      <joint name="panda_joint4" value="-1.0060132436725917" />
+      <joint name="panda_joint5" value="-0.06551647620730898" />
+      <joint name="panda_joint6" value="1.4713840058020946" />
+      <joint name="panda_joint7" value="-0.9128775119251675" />
+    </group_state>
+
+   <group_state name="poseC" group="panda_arm">
+      <joint name="panda_joint1" value="0.04040278840953843" />
+      <joint name="panda_joint2" value="0.5062537732877228" />
+      <joint name="panda_joint3" value="0.08811755336549532" />
+      <joint name="panda_joint4" value="-0.5212807337656821" />
+      <joint name="panda_joint5" value="-0.04812842862817904" />
+      <joint name="panda_joint6" value="1.0217174791230095" />
+      <joint name="panda_joint7" value="0.8114716236326429" />
+    </group_state>
+
+   <group_state name="poseD" group="panda_arm">
+      <joint name="panda_joint1" value="-0.06885547880331676" />
+      <joint name="panda_joint2" value="0.6502414249955563" />
+      <joint name="panda_joint3" value="0.30909092806918703" />
+      <joint name="panda_joint4" value="-0.8569210281125061" />
+      <joint name="panda_joint5" value="-0.17449850910924244" />
+      <joint name="panda_joint6" value="1.2387292694005774" />
+      <joint name="panda_joint7" value="0.8991010583485708" />
+    </group_state>
+
+    <group_state name="poseE" group="panda_arm">
+      <joint name="panda_joint1" value="0.06604403998932705" />
+      <joint name="panda_joint2" value="0.1277567245209574" />
+      <joint name="panda_joint3" value="0.013704625873107796" />
+      <joint name="panda_joint4" value="-1.5021708607424118" />
+      <joint name="panda_joint5" value="-0.0011158202969403948" />
+      <joint name="panda_joint6" value="1.6251369960043165" />
+      <joint name="panda_joint7" value="2.414286227415811" />
+    </group_state>
+
+    <group_state name="poseF" group="panda_arm">
+      <joint name="panda_joint1" value="-0.007664520004143318" />
+      <joint name="panda_joint2" value="-0.937150384271075" />
+      <joint name="panda_joint3" value="-0.03462902579966343" />
+      <joint name="panda_joint4" value="-2.937443398860463" />
+      <joint name="panda_joint5" value="0.06915401003123613" />
+      <joint name="panda_joint6" value="2.5916731508698434" />
+      <joint name="panda_joint7" value="0.720755857238736" />
+    </group_state> -->
+
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="panda_link0" link2="panda_link1" reason="Adjacent" />
+    <disable_collisions link1="panda_link0" link2="panda_link2" reason="Never" />
+    <disable_collisions link1="panda_link0" link2="panda_link3" reason="Never" />
+    <disable_collisions link1="panda_link0" link2="panda_link4" reason="Never" />
+    <disable_collisions link1="panda_link1" link2="panda_link2" reason="Adjacent" />
+    <disable_collisions link1="panda_link1" link2="panda_link3" reason="Never" />
+    <disable_collisions link1="panda_link1" link2="panda_link4" reason="Never" />
+    <disable_collisions link1="panda_link2" link2="panda_link3" reason="Adjacent" />
+    <disable_collisions link1="panda_link2" link2="panda_link4" reason="Never" />
+    <disable_collisions link1="panda_link2" link2="panda_link6" reason="Never" />
+    <disable_collisions link1="panda_link3" link2="panda_link4" reason="Adjacent" />
+    <disable_collisions link1="panda_link3" link2="panda_link5" reason="Never" />
+    <disable_collisions link1="panda_link3" link2="panda_link6" reason="Never" />
+    <disable_collisions link1="panda_link3" link2="panda_link7" reason="Never" />
+    <disable_collisions link1="panda_link4" link2="panda_link5" reason="Adjacent" />
+    <disable_collisions link1="panda_link4" link2="panda_link6" reason="Never" />
+    <disable_collisions link1="panda_link4" link2="panda_link7" reason="Never" />
+    <disable_collisions link1="panda_link5" link2="panda_link6" reason="Adjacent" />
+    <disable_collisions link1="panda_link5" link2="panda_link7" reason="Default" />
+    <disable_collisions link1="panda_link6" link2="panda_link7" reason="Adjacent" />
+  </xacro:macro>
+</robot>
