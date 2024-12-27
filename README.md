@@ -103,13 +103,13 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 
    To handle this, a fully automated script has been created.
 
-   2. **Make the script executable:**
+   1. **Make the script executable:**
       To ensure the script can be executed, run:
       ```bash
       chmod +x setup_cartesian_impedance.sh
       ```
 
-   3. **Run the script:**
+   2. **Run the script:**
       Execute the script to set up Cartesian Impedance Control:
       ```bash
       ./setup_cartesian_impedance.sh
