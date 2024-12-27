@@ -96,11 +96,24 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 
 ### Steps
 1. **Modify Configuration Files:**
-   Replace the following files in the `franka_example_controllers` package with the ones provided in this repository:
+   Some files need to be replaced in the `franka_example_controllers` package with the ones provided in this repository:
    - `config/franka_example_controllers.yaml`
    - `cfg/compliance_param.cfg`
    - `include/pseudo_inversion.h`
-   - `src/cartesian_impedance_example_controller.cpp`
+
+   To handle this, a fully automated script has been created.
+
+   2. **Make the script executable:**
+      To ensure the script can be executed, run:
+      ```bash
+      chmod +x setup_cartesian_impedance.sh
+      ```
+
+   3. **Run the script:**
+      Execute the script to set up Cartesian Impedance Control:
+      ```bash
+      ./setup_cartesian_impedance.sh
+      ```
 
 2. **Add `panda_moveit_config`:**
    Ensure the `panda_moveit_config` folder is present in `~/catkin_ws/src/franka_ros/`.
