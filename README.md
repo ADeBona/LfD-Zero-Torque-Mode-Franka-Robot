@@ -100,8 +100,9 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
    - `config/franka_example_controllers.yaml`
    - `cfg/compliance_param.cfg`
    - `include/pseudo_inversion.h`
+   - etc...
 
-   To handle this, a fully automated script has been created.
+   A fully automated script has been created to handle this.
 
    1. **Make the script executable:**
       To ensure the script can be executed, run:
@@ -114,25 +115,22 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
       ```bash
       ./setup_cartesian_impedance.sh
       ```
-
-2. **Add `panda_moveit_config`:**
-   Ensure the `panda_moveit_config` folder is present in `~/catkin_ws/src/franka_ros/`.
-
-3. **Build the Workspace:**
+      
+2. **Build the Workspace:**
    ```bash
    cd ~/catkin_ws
    catkin_make
    source devel/setup.bash
    ```
 
-4. **Launch MoveIt Configuration:**
-   Add `franka_moveit.launch` to the launch folder (e.g., `~/catkin_ws/src/franka_ros/franka_example_controllers/launch`) and run:
+3. **Launch MoveIt Configuration:**
+   Now you can run:
    ```bash
    roslaunch franka_example_controllers franka_moveit.launch
    ```
 
-5. **Enable Cartesian Impedance Control:**
-   Add `data_collection_top.py` to the `script` folder (e.g., `~/catkin_ws/src/franka_ros/franka_example_controllers/script`) and run:
+4. **Enable Cartesian Impedance Control:**
+   Then open a new terminal and run:
    ```bash
    cd ~/catkin_ws/src/franka_ros/franka_example_controllers/script
    chmod +x data_collection_top.py
