@@ -1,33 +1,26 @@
-# README
+# Franka Setup Guide 💻
 
-## About
+Welcome to the **Franka Installation Tutorial**! This guide walks you through setting up the Franka Emika Panda robot for your Ubuntu system. By the end, you'll have:
 
-This tutorial explains how to install Franka for your Ubuntu system. It includes instructions to set up:
+- **Libfranka** installed
+- **franka_ros** configured
+- **Cartesian Impedance Control** enabled
 
-- Libfranka
-- franka_ros
-- Cartesian Impedance Control
 
-This repository is developed by Alessio De Bona and is inspired by Venkatesh's original tutorial. It has been tested on:
-- **Ubuntu 16.04** (ROS Kinetic)
-- **Ubuntu 20.04** (ROS Noetic)
-
-### Note
-This repository contains a single Python script to verify the working of the setup.
-
-## Libfranka Installation
+## ✨ Libfranka Installation
 
 ### Steps
-1. **Identify your Franka Controller Version:**
+
+1. **Identify Your Franka Controller Version:**
    - Open the Franka Desk interface: [https://172.16.0.2/desk](https://172.16.0.2/desk).
-   - Click on the three lines in the top-right corner to open the dropdown menu.
-   - Select `Settings` to view the Franka version (e.g., `4.0.3`, `2.1.1`).
+   - Click the three lines in the top-right corner for the dropdown menu.
+   - Select **Settings** to view your Franka version (e.g., `4.0.3`, `2.1.1`).
 
 2. **Check Compatibility:**
-   - Visit [Franka Compatibility Docs](https://frankaemika.github.io/docs/compatibility.html) to determine the compatible versions of `libfranka` and `franka_ros`.
-   - Example: For **ROS Kinetic** and **Franka version 2.1.1**, the compatible versions are `libfranka 0.5.0` and `franka_ros 0.6.0`.
+   - Visit [Franka Compatibility Docs](https://frankaemika.github.io/docs/compatibility.html) to find the correct versions of `libfranka` and `franka_ros` for your system.
+   - Example: For **ROS Kinetic** and **Franka version 2.1.1**, use `libfranka 0.5.0` and `franka_ros 0.6.0`.
 
-3. **Install `libfranka` from source:**
+3. **Install `libfranka` from Source:**
    ```bash
    cd
    sudo apt remove "*libfranka*"
@@ -41,15 +34,16 @@ This repository contains a single Python script to verify the working of the set
    cmake --build .
    ```
 
-### Success
-Congratulations! You have successfully installed `libfranka`. Proceed to the next step.
+### Success 🎉
+Congrats! You’ve installed `libfranka`. Let’s move on to **franka_ros**. 🚀
 
 ---
 
-## franka_ros Installation
+## 🚀 franka_ros Installation
 
 ### Steps
-1. **Set up your Catkin Workspace:**
+
+1. **Set Up Your Catkin Workspace:**
    ```bash
    cd
    mkdir -p catkin_ws/src
@@ -75,64 +69,59 @@ Congratulations! You have successfully installed `libfranka`. Proceed to the nex
    sudo usermod -a -G realtime $(whoami)
    ```
 
-4. **Reboot your system.**
+4. **Reboot Your System.**
 
-### Testing
-To check the setup:
+### Testing 🔧
+Run the following commands to verify:
 ```bash
 cd ~/catkin_ws
 source devel/setup.bash
 roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 ```
-
-- Use `rostopic list` to view topics.
-- If you encounter `[ERROR]: libfranka: Move command aborted`, ensure:
-  - `libfranka` and `franka_ros` versions match.
-  - Emergency stop is released (Franka lights should be blue).
+- Use `rostopic list` to view available topics.
+- **Common Issue:** If you see `[ERROR]: libfranka: Move command aborted`:
+  - Ensure `libfranka` and `franka_ros` versions match.
+  - Release the emergency stop (Franka lights should be blue).
 
 ---
 
-## Cartesian Impedance Control (Zero Torque Mode)
+## 🪼 Cartesian Impedance Control (Zero Torque Mode)
 
 ### Steps
+
 1. **Modify Configuration Files:**
-   Some files need to be replaced in the `franka_example_controllers` package with the ones provided in this repository:
+   Replace files in the `franka_example_controllers` package with the ones provided in this repository:
    - `config/franka_example_controllers.yaml`
    - `cfg/compliance_param.cfg`
    - `include/pseudo_inversion.h`
+   - And more...
 
-   To handle this, a fully automated script has been created.
-
-   1. **Make the script executable:**
-      To ensure the script can be executed, run:
+   To automate this:
+   
+   1. **Make the Script Executable:**
       ```bash
       chmod +x setup_cartesian_impedance.sh
       ```
 
-   2. **Run the script:**
-      Execute the script to set up Cartesian Impedance Control:
+   2. **Run the Script:**
       ```bash
       ./setup_cartesian_impedance.sh
       ```
 
-2. **Add `panda_moveit_config`:**
-   Ensure the `panda_moveit_config` folder is present in `~/catkin_ws/src/franka_ros/`.
-
-3. **Build the Workspace:**
+2. **Build the Workspace:**
    ```bash
    cd ~/catkin_ws
    catkin_make
    source devel/setup.bash
    ```
 
-4. **Launch MoveIt Configuration:**
-   Add `franka_moveit.launch` to the launch folder (e.g., `~/catkin_ws/src/franka_ros/franka_example_controllers/launch`) and run:
+3. **Launch MoveIt Configuration:**
    ```bash
    roslaunch franka_example_controllers franka_moveit.launch
    ```
 
-5. **Enable Cartesian Impedance Control:**
-   Add `data_collection_top.py` to the `script` folder (e.g., `~/catkin_ws/src/franka_ros/franka_example_controllers/script`) and run:
+4. **Enable Cartesian Impedance Control:**
+   Open a new terminal and run:
    ```bash
    cd ~/catkin_ws/src/franka_ros/franka_example_controllers/script
    chmod +x data_collection_top.py
@@ -141,10 +130,13 @@ roslaunch franka_control franka_control.launch robot_ip:=172.16.0.2
 
 ### Notes
 - Press **`h`** to move the robot to its home position.
-- Press **`t`** to enable the zero torque Cartesian impedance controller, allowing free manual movement.
+- Press **`t`** to enable the zero torque Cartesian impedance controller for manual movement.
 
 ---
 
-## Conclusion
+## 🌟 Conclusion
 
-This repository provides all the tools and configurations required to set up Franka Emika Panda for ROS. Happy coding and enjoy working with your robot!
+That’s it! You’re now ready to explore the full potential of the **Franka Emika Panda** robot. Whether you’re tinkering with Cartesian Impedance Control or simply learning the basics, we hope this guide empowers you to achieve your goals.
+
+Happy coding, and enjoy working with your robot! 🛠️✨
+
